@@ -9,52 +9,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            /* Esto es MUY IMPORTANTE: añade un espacio superior para que la barra fija no tape el contenido */
-            padding-top: 80px; 
-        }
-
-        .main-navbar {
-            position: fixed; /* Fija la barra en la parte superior */
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-sizing: border-box;
-        }
-
-        .main-navbar .logo-img {
-            height: 55px; /* Tamaño del logo aumentado */
-            width: auto;
-        }
-        
-        /* Reutilizamos la clase del botón que ya tenías para mantener consistencia */
-        .main-navbar .cta-button-sticky {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-        }
-    </style>
 </head>
 <body>
 
-    <nav class="main-navbar">
-        <a href="#"> <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/logocascadascasadeplata.png?raw=true" alt="Logo Cascada Casa de Plata" class="logo-img">
-        </a>
+    <div id="sticky-cta-bar" class="sticky-cta-bar">
+        <span class="sticky-title">Cascada Casa de Plata</span>
         <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20reservar%20mi%20lugar%20para%20la%20próxima%20excursión." class="cta-button-sticky" target="_blank">Reservá tu Cupo</a>
-    </nav>
+    </div>
 
     <header class="hero">
         <div class="hero-content">
@@ -100,8 +61,8 @@
                 <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Te%20gustari%CC%81a%20conocer%20este%20hermoso%20lugarLo%20visitamos%20el%20domingo%202%20de%20marzo%20Salimos%20a%20las%2015-00hsI%20(3).webp?raw=true" alt="Gente nadando en la olla de la cascada">
             </div>
              <a href="https://www.instagram.com/cascadacasadeplataa/" target="_blank" class="instagram-button">
-                 Seguinos en Instagram
-             </a>
+                Seguinos en Instagram
+            </a>
         </section>
 
         <section class="section info-section animate-on-scroll">
