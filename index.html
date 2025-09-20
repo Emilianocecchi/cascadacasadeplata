@@ -9,14 +9,52 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            /* Esto es MUY IMPORTANTE: añade un espacio superior para que la barra fija no tape el contenido */
+            padding-top: 80px; 
+        }
+
+        .main-navbar {
+            position: fixed; /* Fija la barra en la parte superior */
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .main-navbar .logo-img {
+            height: 55px; /* Tamaño del logo aumentado */
+            width: auto;
+        }
+        
+        /* Reutilizamos la clase del botón que ya tenías para mantener consistencia */
+        .main-navbar .cta-button-sticky {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
-    <div id="sticky-cta-bar" class="sticky-cta-bar">
-        <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/logocascadascasadeplata.png?raw=true" alt="Logo Cascada Casa de Plata" style="height: 40px; vertical-align: middle;">
-        
+    <nav class="main-navbar">
+        <a href="#"> <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/logocascadascasadeplata.png?raw=true" alt="Logo Cascada Casa de Plata" class="logo-img">
+        </a>
         <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20reservar%20mi%20lugar%20para%20la%20próxima%20excursión." class="cta-button-sticky" target="_blank">Reservá tu Cupo</a>
-    </div>
+    </nav>
 
     <header class="hero">
         <div class="hero-content">
