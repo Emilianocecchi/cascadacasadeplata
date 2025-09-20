@@ -10,7 +10,7 @@ body {
 
 /* 1. Sección Héroe */
 .hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/hero-background.jpg?raw=true'); /* REEMPLAZA ESTA IMAGEN */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/hero-background.jpg?raw=true');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -61,6 +61,33 @@ body {
     margin-bottom: 30px;
 }
 
+/* NUEVO: Estilos para la sección de Próxima Salida */
+.proxima-salida-section {
+    background-color: #e8f4f8; /* Un celeste suave para destacar */
+    border-radius: 12px;
+    margin: 40px auto;
+    padding: 40px 20px;
+    border: 1px solid #cce4ed;
+}
+
+.salida-info {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 1.2em;
+}
+
+.salida-info p {
+    margin: 5px;
+}
+
+.cupos-limitados {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
 /* 3. Información Clave */
 .info-section {
     background-color: #fff;
@@ -78,19 +105,37 @@ body {
     border-radius: 8px;
 }
 
-/* 4. Galería */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 10px;
+/* NUEVO: Estilos para la sección de Instagram */
+.instagram-link {
+    text-decoration: none;
+    color: inherit; /* Hereda el color del texto para que no se vea azul */
 }
 
-.gallery img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
+.instagram-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
+
+.instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.instagram-grid img {
+    width: 100%;
+    height: 220px; /* Alto fijo para que todas las imágenes sean iguales */
+    object-fit: cover; /* Evita que la imagen se deforme */
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instagram-grid img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
 
 /* 5. Footer */
 .footer {
@@ -122,5 +167,9 @@ body {
     }
     .section h2 {
         font-size: 2em;
+    }
+    .salida-info {
+        flex-direction: column;
+        align-items: center;
     }
 }
