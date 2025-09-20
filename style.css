@@ -10,7 +10,7 @@ body {
 
 /* 1. Sección Héroe */
 .hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/hero-background.jpg'); /* REEMPLAZA ESTA IMAGEN */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/hero-background.jpg?raw=true'); /* REEMPLAZA ESTA IMAGEN */
     background-size: cover;
     background-position: center;
     height: 100vh;
