@@ -26,10 +26,16 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 8px 20px;
+    padding: 8px 20px; /* Un poco menos de padding */
     display: flex;
-    justify-content: space-between;
+    /* Ajustes clave aquí para evitar que se corte: */
+    justify-content: space-between; /* Mantiene los elementos separados */
     align-items: center;
+    flex-wrap: nowrap; /* Evita que los elementos se envuelvan a la siguiente línea */
+    overflow: hidden; /* Oculta cualquier contenido que se desborde */
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho */
+    /* Fin de ajustes clave */
+    
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     z-index: 1000;
     transform: translateY(-100%);
@@ -44,6 +50,12 @@ body {
     font-weight: 700;
     font-size: 1.1em;
     letter-spacing: 0.5px;
+    /* Nuevo: Permitir que el título se encoja si es necesario */
+    flex-shrink: 1; 
+    white-space: nowrap; /* Evita que el título se rompa */
+    overflow: hidden; /* Oculta si se desborda */
+    text-overflow: ellipsis; /* Agrega puntos suspensivos si se corta */
+    margin-right: 15px; /* Pequeño espacio entre el título y el botón */
 }
 .cta-button-sticky {
     background-color: var(--action-color);
@@ -55,11 +67,14 @@ body {
     font-weight: 700;
     transition: all 0.3s ease;
     box-shadow: none;
+    /* Nuevo: Asegurar que el botón no se encoja y tenga el espacio necesario */
+    flex-shrink: 0; /* Evita que el botón se encoja */
 }
 .cta-button-sticky:hover {
     background-color: var(--action-color-hover);
     transform: translateY(-1px);
 }
+
 
 /* --- SECCIONES Y TÍTULOS --- */
 .hero {
@@ -157,7 +172,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* --- NUEVO: ESTILOS PARA LA SECCIÓN DEL MAPA --- */
+/* --- SECCIÓN DEL MAPA --- */
 .map-section {
     padding-top: 60px;
     padding-bottom: 60px;
@@ -274,6 +289,7 @@ body {
     }
     .sticky-cta-bar {
         justify-content: center;
+        padding: 8px 15px; /* Ajuste el padding horizontal para dejar más espacio */
     }
     .cta-button-sticky {
         padding: 10px 25px;
