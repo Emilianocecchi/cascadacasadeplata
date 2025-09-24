@@ -1,11 +1,13 @@
-/* --- ESTILOS GENERALES Y DE CONVERSIÓN --- */
+/* --- ESTILOS GENERALES (MOBILE-FIRST) --- */
 :root {
     --primary-color: #0d2c44; /* Azul oscuro para textos */
-    --secondary-color: #3f5e71; /* Un azul más claro para elementos secundarios */
-    --action-color: #25D366; /* Verde WhatsApp para CTAs */
+    --secondary-color: #3f5e71; /* Azul más claro */
+    --action-color: #25D366; /* Verde WhatsApp */
     --action-color-hover: #128C7E;
     --background-light: #f7f9fa;
-    --background-accent: #e8f4f8; /* Fondo para secciones destacadas */
+    --background-accent: #e8f4f8;
+    --media-card-bg: #ffffff; /* Fondo para cards de medios */
+    --shadow-soft: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 body {
@@ -16,6 +18,18 @@ body {
     color: var(--primary-color);
     text-align: center;
     line-height: 1.6;
+    font-size: 16px; /* Base para accesibilidad */
+}
+
+/* Mejores prácticas: Accesibilidad - Asegurar contrastes altos */
+a {
+    color: var(--action-color);
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto; /* Responsive images */
 }
 
 /* --- BARRA DE CTA FIJA (STICKY) --- */
@@ -26,17 +40,14 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 8px 20px; /* Un poco menos de padding */
+    padding: 8px 15px;
     display: flex;
-    /* Ajustes clave aquí para evitar que se corte: */
-    justify-content: space-between; /* Mantiene los elementos separados */
+    justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap; /* Evita que los elementos se envuelvan a la siguiente línea */
-    overflow: hidden; /* Oculta cualquier contenido que se desborde */
-    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho */
-    /* Fin de ajustes clave */
-    
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    flex-wrap: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    box-shadow: var(--shadow-soft);
     z-index: 1000;
     transform: translateY(-100%);
     transition: transform 0.4s ease-in-out;
@@ -48,40 +59,34 @@ body {
 }
 .sticky-cta-bar .sticky-title {
     font-weight: 700;
-    font-size: 1.1em;
-    letter-spacing: 0.5px;
-    /* Nuevo: Permitir que el título se encoja si es necesario */
-    flex-shrink: 1; 
-    white-space: nowrap; /* Evita que el título se rompa */
-    overflow: hidden; /* Oculta si se desborda */
-    text-overflow: ellipsis; /* Agrega puntos suspensivos si se corta */
-    margin-right: 15px; /* Pequeño espacio entre el título y el botón */
+    font-size: 1em;
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
 }
 .cta-button-sticky {
     background-color: var(--action-color);
     color: white;
-    padding: 8px 18px;
-    font-size: 0.85em;
+    padding: 8px 16px;
+    font-size: 0.9em;
     border-radius: 25px;
-    text-decoration: none;
     font-weight: 700;
     transition: all 0.3s ease;
-    box-shadow: none;
-    /* Nuevo: Asegurar que el botón no se encoja y tenga el espacio necesario */
-    flex-shrink: 0; /* Evita que el botón se encoja */
+    flex-shrink: 0;
 }
-.cta-button-sticky:hover {
+.cta-button-sticky:hover, .cta-button-sticky:focus {
     background-color: var(--action-color-hover);
     transform: translateY(-1px);
 }
-
 
 /* --- SECCIONES Y TÍTULOS --- */
 .hero {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/hero-background.jpg?raw=true');
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: 80vh; /* Ajustado para mobile */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,101 +94,84 @@ body {
     padding: 20px;
 }
 .hero-content h1 {
-    font-size: clamp(2.5em, 5vw, 4em);
+    font-size: 2em;
     font-weight: 800;
     text-shadow: 0 2px 5px rgba(0,0,0,0.5);
     margin-bottom: 0.5em;
 }
 .hero-content p {
-    font-size: clamp(1.1em, 2vw, 1.5em);
-    margin-bottom: 2.5em;
+    font-size: 1em;
+    margin-bottom: 1.5em;
 }
 .section {
-    padding: 80px 20px;
-    max-width: 960px;
+    padding: 40px 15px; /* Padding mobile */
+    max-width: 100%;
     margin: 0 auto;
 }
 .section h2 {
-    font-size: clamp(2em, 4vw, 2.8em);
+    font-size: 1.8em;
     font-weight: 800;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     color: var(--primary-color);
 }
 .section p {
-    max-width: 700px; /* Centra y limita el ancho del texto */
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
+    max-width: 90%;
+    margin: 0 auto 15px;
 }
 
-/* --- BOTONES DE LLAMADO A LA ACCIÓN (CTAs) GENERALES --- */
+/* --- BOTONES CTAs --- */
 .cta-button {
     background-color: var(--action-color);
     color: white;
-    padding: 18px 35px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1.1em;
+    padding: 12px 25px;
+    font-size: 1em;
     border-radius: 50px;
+    font-weight: 700;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    box-shadow: var(--shadow-soft);
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 15px;
 }
-.cta-button:hover {
+.cta-button:hover, .cta-button:focus {
     background-color: var(--action-color-hover);
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(18, 140, 126, 0.5);
 }
 
-/* --- SECCIÓN PRÓXIMA SALIDA (URGENCIA) --- */
+/* --- SECCIÓN PRÓXIMA SALIDA --- */
 .proxima-salida-section {
     background-color: var(--primary-color);
     color: white;
     border-radius: 16px;
-    margin: 40px auto;
-    padding: 50px 30px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-.proxima-salida-section h2 {
-    color: white;
+    margin: 20px 15px;
+    padding: 30px 20px;
+    box-shadow: var(--shadow-soft);
 }
 .salida-info {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 20px;
-    font-size: 1.3em;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px dashed rgba(255,255,255,0.3);
-}
-.salida-info p {
-    margin: 5px 0;
-}
-.salida-info strong {
-    color: #fff;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1em;
+    margin-bottom: 20px;
 }
 .cupos-limitados {
     font-weight: 700;
     color: #ffd700;
-    font-size: 1.2em;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    font-size: 1em;
+    margin: 15px 0;
 }
 
-/* --- SECCIÓN DEL MAPA --- */
+/* --- SECCIÓN MAPA --- */
 .map-section {
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding: 40px 15px;
 }
 .map-container {
     position: relative;
-    padding-bottom: 75%; /* Proporción 4:3 para el mapa */
+    padding-bottom: 75%;
     height: 0;
     overflow: hidden;
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-soft);
 }
 .map-container iframe {
     position: absolute;
@@ -191,84 +179,112 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
+    loading: lazy; /* Rendimiento */
 }
 
-/* --- SECCIÓN INSTAGRAM (PRUEBA SOCIAL) --- */
+/* --- SECCIÓN INSTAGRAM --- */
 .instagram-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: 1fr;
     gap: 15px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 .instagram-grid img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
+    height: auto;
     border-radius: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
 }
 .instagram-grid img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    transform: scale(1.03);
 }
-
 .instagram-button {
     background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
     color: white;
-    padding: 18px 35px;
+    padding: 12px 25px;
     border-radius: 50px;
-    text-decoration: none;
     font-weight: 700;
-    font-size: 1.1em;
-    display: inline-block;
+    font-size: 1em;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(228, 64, 95, 0.4);
+    box-shadow: var(--shadow-soft);
 }
 .instagram-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(228, 64, 95, 0.5);
 }
 
-/* --- SECCIÓN INFO CLAVE --- */
+/* --- SECCIÓN EN LOS MEDIOS (NUEVA) --- */
+.media-section {
+    background-color: var(--background-accent);
+    padding: 40px 15px;
+}
+.media-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+.media-card {
+    background-color: var(--media-card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    text-align: left;
+}
+.media-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+.media-date {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+.media-summary {
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+.media-button {
+    font-size: 0.95em;
+    padding: 10px 20px;
+}
+
+/* --- SECCIÓN INFO --- */
 .info-section {
     background-color: white;
     border-radius: 16px;
-    padding: 50px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    padding: 30px 15px;
+    box-shadow: var(--shadow-soft);
+    margin: 20px 15px;
 }
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 15px;
 }
 .info-item {
-    padding: 20px;
+    padding: 15px;
     border: 1px solid #eee;
     border-radius: 8px;
     background-color: var(--background-light);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 .info-item h3 {
-    font-size: 1.3em;
-    margin-bottom: 10px;
-    color: var(--secondary-color);
+    font-size: 1.1em;
+    margin-bottom: 5px;
 }
 
 /* --- FOOTER --- */
 .footer {
     background-color: var(--primary-color);
     color: white;
-    padding: 60px 20px;
-    margin-top: 60px;
+    padding: 40px 15px;
+    margin-top: 40px;
 }
 .footer h2 {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-/* --- ANIMACIONES DE SCROLL --- */
+/* --- ANIMACIONES --- */
 .animate-on-scroll {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 .animate-on-scroll.in-view {
@@ -276,29 +292,78 @@ body {
     transform: translateY(0);
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .salida-info {
-        flex-direction: column;
-    }
-    .info-section {
-        padding: 40px 20px;
-    }
-    .sticky-cta-bar .sticky-title {
-        display: none;
-    }
-    .sticky-cta-bar {
-        justify-content: center;
-        padding: 8px 15px; /* Ajuste el padding horizontal para dejar más espacio */
-    }
-    .cta-button-sticky {
-        padding: 10px 25px;
-        font-size: 0.95em;
+/* --- MEDIA QUERIES PARA DESKTOP (MOBILE-FIRST) --- */
+@media (min-width: 768px) {
+    .hero {
+        height: 100vh;
     }
     .hero-content h1 {
-        font-size: 2.2em;
+        font-size: clamp(2.5em, 5vw, 4em);
     }
     .hero-content p {
-        font-size: 1em;
+        font-size: clamp(1.1em, 2vw, 1.5em);
+        margin-bottom: 2.5em;
+    }
+    .section {
+        padding: 80px 20px;
+        max-width: 960px;
+    }
+    .section h2 {
+        font-size: clamp(2em, 4vw, 2.8em);
+        margin-bottom: 40px;
+    }
+    .section p {
+        max-width: 700px;
+        margin-bottom: 20px;
+    }
+    .cta-button {
+        padding: 18px 35px;
+        font-size: 1.1em;
+        margin-top: 20px;
+    }
+    .proxima-salida-section {
+        margin: 40px auto;
+        padding: 50px 30px;
+    }
+    .salida-info {
+        flex-direction: row;
+        justify-content: space-around;
+        font-size: 1.3em;
+        margin-bottom: 30px;
+    }
+    .cupos-limitados {
+        font-size: 1.2em;
+        margin: 30px 0;
+    }
+    .instagram-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .instagram-grid img {
+        height: 220px;
+    }
+    .media-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .info-section {
+        padding: 50px;
+        margin: 0 auto;
+    }
+    .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .footer {
+        padding: 60px 20px;
+        margin-top: 60px;
+    }
+    .sticky-cta-bar {
+        padding: 8px 20px;
+    }
+    .sticky-cta-bar .sticky-title {
+        font-size: 1.1em;
+        margin-right: 15px;
+    }
+    .cta-button-sticky {
+        padding: 8px 18px;
+        font-size: 0.85em;
     }
 }
