@@ -6,11 +6,13 @@
     <title>Cascada Casa de Plata - Aventura y Trekking en Salsacate</title>
     <meta name="description" content="Excursiones y trekking a la increíble Cascada Casa de Plata. Reservá tu cupo para una aventura natural única en Salsacate, Córdoba.">
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         /* --- ESTILOS GENERALES Y VARIABLES --- */
@@ -638,6 +640,8 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .media-card:hover {
@@ -658,6 +662,9 @@
 
         .media-content {
             padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .media-content h3 {
@@ -670,6 +677,11 @@
             text-align: left;
             color: var(--text-color);
             margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .media-content .cta-button {
+            margin-top: auto;
         }
 
         /* --- GALERÍA DE FOTOS --- */
@@ -950,10 +962,12 @@
     </style>
 </head>
 <body>
+    <!-- Loader -->
     <div class="loader" id="loader">
         <div class="loader-spinner"></div>
     </div>
 
+    <!-- Navegación -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="nav-logo">
@@ -976,6 +990,7 @@
         </div>
     </nav>
 
+    <!-- Menú Mobile -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-links">
             <a href="#experiencia" onclick="closeMobileMenu()">La Experiencia</a>
@@ -988,6 +1003,7 @@
         </div>
     </div>
 
+    <!-- Hero -->
     <header class="hero">
         <div class="hero-content">
             <h1>Descubrí la Cascada Casa de Plata</h1>
@@ -1001,6 +1017,7 @@
     </header>
 
     <main>
+        <!-- Experiencia -->
         <section id="experiencia" class="section animate-on-scroll">
             <div class="container">
                 <h2><i class="fa-solid fa-binoculars"></i>Una Experiencia Inolvidable</h2>
@@ -1010,6 +1027,7 @@
             </div>
         </section>
 
+        <!-- Info Grid -->
         <section class="section info-section animate-on-scroll">
             <div class="container">
                 <div class="info-grid">
@@ -1047,6 +1065,7 @@
             </div>
         </section>
 
+        <!-- Próxima Salida y Contador -->
         <section id="salidas" class="section proxima-salida-section animate-on-scroll">
             <div class="container">
                 <h2><i class="fa-solid fa-calendar-check"></i>¡Salimos todos los Domingos!</h2>
@@ -1083,6 +1102,7 @@
             </div>
         </section>
 
+        <!-- Galería -->
         <section id="galeria" class="section gallery-section animate-on-scroll">
             <div class="container">
                 <h2><i class="fa-solid fa-camera-retro"></i>Momentos de la Aventura</h2>
@@ -1112,17 +1132,19 @@
             </div>
         </section>
 
+        <!-- Lightbox -->
         <div class="lightbox" id="lightbox" onclick="closeLightbox()">
             <span class="lightbox-close">&times;</span>
             <img src="" alt="Vista ampliada de la galería" id="lightboxImg">
         </div>
 
+        <!-- En los Medios -->
         <section class="section media-section animate-on-scroll" style="background: var(--white-color);">
             <div class="container">
                 <h2><i class="fa-solid fa-newspaper"></i>En los Medios</h2>
                 <div class="media-grid">
                     <div class="media-card">
-                        <img src="https://www.cadena3.com/files/image/283128/h900/una-cascada-con-un-trekking-imperdible-a-15-km-de-salsacate.jpg" alt="Nota en Cadena 3">
+                        <img src="https://www.cadena3.com/admin/playerswf/fotos/ARCHI_821446.jpg" alt="Nota en Cadena 3">
                         <div class="media-content">
                             <h3>Cadena 3: "Una cascada con un trekking imperdible"</h3>
                             <p>"Un rincón serrano que pocos conocen pero ideal para disfrutar en verano. Está ubicado sobre el arroyo Sauce de los Quevedos, a 15 km de Salsacate, y ofrece una experiencia de trekking de dificultad media."</p>
@@ -1130,7 +1152,7 @@
                         </div>
                     </div>
                     <div class="media-card">
-                        <img src="https://cordobainteriorinforma.com/wp-content/uploads/2021/12/cascada-casa-de-plata.jpg" alt="Nota en Córdoba Interior Informa">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ8anoNUNHEZRHboiWZ-9lD47yiZhdaVZUDQ&s" alt="Nota en Córdoba Interior Informa">
                         <div class="media-content">
                             <h3>Córdoba Interior Informa: "Una gran atracción natural"</h3>
                             <p>"La Cascada Casa de Plata es una destacada atracción natural en Salsacate, ofreciendo a los visitantes un entorno paisajístico de gran belleza. Un destino ideal para quienes buscan aventuras al aire libre."</p>
@@ -1141,6 +1163,7 @@
             </div>
         </section>
 
+        <!-- FAQ -->
         <section id="faq" class="section faq-section animate-on-scroll">
             <div class="container">
                 <h2><i class="fa-solid fa-circle-question"></i>Preguntas Frecuentes</h2>
@@ -1165,6 +1188,7 @@
             </div>
         </section>
 
+        <!-- Mapa -->
         <section class="section map-section animate-on-scroll">
             <div class="container">
                 <h2><i class="fa-solid fa-map-location-dot"></i>Punto de Encuentro</h2>
@@ -1176,6 +1200,7 @@
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <h2>¿Listo para la aventura?</h2>
@@ -1191,10 +1216,12 @@
         </div>
     </footer>
 
+    <!-- Botón Flotante WhatsApp -->
     <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20más%20info." class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
