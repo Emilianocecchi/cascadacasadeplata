@@ -8,22 +8,1128 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- ESTILOS GENERALES Y VARIABLES --- */
+        :root {
+            --primary-color: #0d2c44;
+            --secondary-color: #3f5e71;
+            --action-color: #25D366;
+            --action-color-hover: #128C7E;
+            --background-light: #f8f9fa;
+            --text-color: #343a40;
+            --white-color: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 8px 25px rgba(0,0,0,0.1);
+            --warning-color: #ff6b35;
+            --success-color: #28a745;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 800;
+            color: var(--primary-color);
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(2em, 5vw, 2.8em);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--action-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: var(--primary-color);
+            background: linear-gradient(180deg, transparent 60%, rgba(37, 211, 102, 0.3) 60%);
+            padding: 0 4px;
+        }
+
+        /* --- LOADER --- */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--background-light);
+            border-top-color: var(--action-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- BARRA DE NAVEGACIÓN --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: transparent;
+            transition: all 0.4s ease;
+            padding: 25px 0;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 15px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--white-color);
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo::before {
+            content: '🏔️';
+            font-size: 1.3rem;
+        }
+
+        .navbar.scrolled .nav-logo {
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--white-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--action-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--primary-color);
+        }
+
+        .nav-cta {
+            background-color: var(--action-color);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-cta:hover {
+            background-color: var(--action-color-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        /* --- MENÚ MOBILE --- */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: var(--white-color);
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.4s ease;
+            z-index: 999;
+            padding: 80px 30px 30px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .mobile-menu-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--action-color);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--white-color);
+            border-radius: 3px;
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled .hamburger span {
+            background-color: var(--primary-color);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background-image: linear-gradient(rgba(13, 44, 68, 0.6), rgba(13, 44, 68, 0.6)), 
+                              url('https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/hero-background.jpg?raw=true');
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white-color);
+            padding: 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--white-color);
+            text-shadow: 0 3px 8px rgba(0,0,0,0.5);
+            margin-bottom: 0.5em;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            max-width: 800px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            margin-bottom: 2em;
+            animation: fadeIn 1.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero-fog-effect {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to top, 
+                rgba(248, 249, 250, 1) 0%,
+                rgba(248, 249, 250, 0.8) 30%,
+                rgba(248, 249, 250, 0) 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* --- BOTONES CTA --- */
+        .cta-button {
+            background: linear-gradient(135deg, var(--action-color), var(--action-color-hover));
+            color: var(--white-color);
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        .btn-secondary {
+            color: var(--action-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            color: var(--action-color-hover);
+            gap: 10px;
+        }
+
+        .btn-secondary::after {
+            content: '→';
+        }
+
+        /* --- INFO GRID --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .info-item {
+            background: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .info-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .info-item p {
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        /* --- SECCIÓN PRÓXIMA SALIDA --- */
+        .proxima-salida-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .proxima-salida-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .proxima-salida-section h2 {
+            color: var(--white-color);
+        }
+
+        .proxima-salida-section h2::after {
+            background: var(--white-color);
+        }
+
+        .salida-info {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            margin: 0 auto 30px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .salida-info p {
+            color: var(--white-color);
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .salida-info strong {
+            display: inline-block;
+            min-width: 150px;
+        }
+
+        .cupos-container {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin: 30px auto;
+            max-width: 400px;
+        }
+
+        .cupos-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .cupos-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--white-color);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .cupos-text {
+            font-size: 1.1rem;
+            color: var(--white-color);
+        }
+
+        .cupos-limitados {
+            color: var(--white-color);
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: rgba(255,107,53,0.9);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 20px auto;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- CONTADOR --- */
+        .countdown-section {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* --- TESTIMONIOS --- */
+        .testimonios-section {
+            background: var(--background-light);
+            padding: 80px 0;
+        }
+
+        .testimonios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonio-card {
+            background: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .testimonio-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--action-color);
+            opacity: 0.3;
+        }
+
+        .testimonio-text {
+            font-style: italic;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .testimonio-author {
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stars {
+            color: gold;
+            font-size: 1.2rem;
+        }
+
+        /* --- FAQ --- */
+        .faq-section {
+            padding: 80px 0;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white-color);
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            font-weight: 700;
+            color: var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: var(--background-light);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            padding: 0 25px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 25px 20px;
+        }
+
+        .faq-answer p {
+            text-align: left;
+            color: var(--text-color);
+        }
+
+        /* --- MEDIA SECTION --- */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .media-card {
+            background: var(--white-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .media-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .media-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .media-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .media-content {
+            padding: 25px;
+        }
+
+        .media-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .media-content p {
+            text-align: left;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        /* --- GALERÍA DE FOTOS --- */
+        .gallery-section {
+            padding: 80px 0;
+            background: var(--background-light);
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-caption {
+            color: var(--white-color);
+            font-weight: 600;
+        }
+
+        /* --- LIGHTBOX --- */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: pointer;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: var(--white-color);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        /* --- INSTAGRAM --- */
+        .instagram-section {
+            background: var(--white-color);
+            padding: 80px 0;
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .instagram-grid img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .instagram-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        .instagram-button {
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            color: var(--white-color);
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .instagram-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- MAPA --- */
+        .map-section {
+            background: var(--background-light);
+            padding: 80px 0;
+        }
+
+        .map-container {
+            margin-top: 30px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 450px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .footer h2 {
+            color: var(--white-color);
+            margin-bottom: 20px;
+        }
+
+        .footer h2::after {
+            background: var(--white-color);
+        }
+
+        .footer p {
+            color: var(--white-color);
+            margin-bottom: 30px;
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--white-color);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--action-color);
+            transform: translateY(-5px);
+        }
+
+        /* --- BOTÓN FLOTANTE DE WHATSAPP --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--action-color);
+            color: var(--white-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.5);
+            z-index: 100;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.7);
+        }
+
+        /* --- ANIMACIONES AL SCROLL --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-link, .nav-cta {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .countdown-container {
+                gap: 15px;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px 10px;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonios-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .instagram-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+    </div>
 
-    <nav class="navbar">
+    <!-- Navegación -->
+    <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="nav-logo">Casa de Plata</a>
             <div class="nav-menu">
                 <a href="#experiencia" class="nav-link">La Experiencia</a>
+                <a href="#testimonios" class="nav-link">Testimonios</a>
                 <a href="#salidas" class="nav-link">Próxima Salida</a>
-                <a href="#medios" class="nav-link">En los Medios</a>
-                <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20reservar%20mi%20lugar." class="nav-cta" target="_blank">Reservar</a>
+                <a href="#galeria" class="nav-link">Galería</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20reservar%20mi%20lugar." class="nav-cta" target="_blank">
+                    📱 Reservar
+                </a>
             </div>
-            <div class="hamburger">
+            <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -31,37 +1137,436 @@
         </div>
     </nav>
 
+    <!-- Menú Mobile -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-links">
+            <a href="#experiencia" onclick="closeMobileMenu()">La Experiencia</a>
+            <a href="#testimonios" onclick="closeMobileMenu()">Testimonios</a>
+            <a href="#salidas" onclick="closeMobileMenu()">Próxima Salida</a>
+            <a href="#galeria" onclick="closeMobileMenu()">Galería</a>
+            <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+            <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20reservar%20mi%20lugar." class="cta-button" target="_blank">
+                📱 Reservar Ahora
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero -->
     <header class="hero">
         <div class="hero-content">
             <h1 class="animate-on-scroll">Descubrí la Cascada Casa de Plata</h1>
             <p class="animate-on-scroll">Una aventura de trekking única en el corazón de Salsacate, Córdoba.</p>
-            <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20más%20info%20sobre%20la%20excursión." class="cta-button animate-on-scroll" target="_blank">Reservá tu Aventura</a>
+            <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20más%20info%20sobre%20la%20excursión." 
+               class="cta-button animate-on-scroll" target="_blank">
+                🎒 Reservá tu Aventura
+            </a>
         </div>
         <div class="hero-fog-effect"></div>
     </header>
 
     <main>
+        <!-- Experiencia -->
         <section id="experiencia" class="section animate-on-scroll">
             <div class="container">
                 <h2>🏞️ Una Experiencia Inolvidable</h2>
-                <p>Te invitamos a una caminata guiada por un sendero natural hasta la imponente Cascada Casa de Plata. Es un trekking de <span class="highlight">nivel medio</span>, ideal para conectar con la naturaleza y disfrutar de paisajes únicos en un terreno privado y exclusivo.</p>
+                <p>Te invitamos a una caminata guiada por un sendero natural hasta la imponente Cascada Casa de Plata. 
+                   Es un trekking de <span class="highlight">nivel medio</span>, ideal para conectar con la naturaleza 
+                   y disfrutar de paisajes únicos en un terreno privado y exclusivo.</p>
             </div>
         </section>
 
+        <!-- Info Grid -->
         <section class="section info-section animate-on-scroll">
             <div class="container">
                 <div class="info-grid">
                     <div class="info-item">
                         <h3>🕒 Duración</h3>
-                        <p>3-4 horas aprox.</p>
+                        <p>3-4 horas de aventura pura</p>
                     </div>
                     <div class="info-item">
                         <h3>🎒 ¿Qué traer?</h3>
-                        <p>Calzado cómodo, agua, protector solar y traje de baño.</p>
+                        <p>Calzado cómodo, agua, protector solar y traje de baño</p>
                     </div>
                     <div class="info-item">
                         <h3>🧗 Dificultad</h3>
                         <p>Trekking de <span class="highlight">nivel medio</span>. ¡Ideal para aventureros!</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>👥 Grupo</h3>
+                        <p>Máximo 25 personas para una experiencia personalizada</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>📍 Distancia</h3>
+                        <p>5 km de recorrido total por senderos naturales</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>💎 Incluye</h3>
+                        <p>Guía profesional, seguro y acceso exclusivo al predio</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contador -->
+        <section class="countdown-section animate-on-scroll">
+            <div class="container">
+                <h3 style="color: white; margin-bottom: 20px;">⏰ Próxima Salida en:</h3>
+                <div class="countdown-container" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">0</span>
+                        <span class="countdown-label">Días</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">0</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">0</span>
+                        <span class="countdown-label">Minutos</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">0</span>
+                        <span class="countdown-label">Segundos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonios -->
+        <section id="testimonios" class="section testimonios-section animate-on-scroll">
+            <div class="container">
+                <h2>💬 Lo que dicen nuestros aventureros</h2>
+                <div class="testimonios-grid">
+                    <div class="testimonio-card">
+                        <p class="testimonio-text">
+                            "Una experiencia increíble! El guía super profesional y atento. 
+                            La cascada es impresionante, valió totalmente la pena el trekking."
+                        </p>
+                        <div class="testimonio-author">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span>María González</span>
+                        </div>
+                    </div>
+                    <div class="testimonio-card">
+                        <p class="testimonio-text">
+                            "Excelente organización, el sendero está bien marcado y los paisajes son espectaculares. 
+                            Recomiendo llevar cámara para capturar todos los momentos."
+                        </p>
+                        <div class="testimonio-author">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span>Carlos Rodríguez</span>
+                        </div>
+                    </div>
+                    <div class="testimonio-card">
+                        <p class="testimonio-text">
+                            "Fui con mi familia y todos la pasamos genial. Es una actividad perfecta para 
+                            desconectar y disfrutar de la naturaleza. ¡Volveremos seguro!"
+                        </p>
+                        <div class="testimonio-author">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span>Ana Martínez</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Próxima Salida -->
+        <section id="salidas" class="section proxima-salida-section animate-on-scroll">
+            <div class="container">
+                <h2>🗓️ ¡Salimos todos los Domingos!</h2>
+                <div class="salida-info">
+                    <p><strong>Día:</strong> Todos los Domingos</p>
+                    <p><strong>Hora:</strong> 15:00 hs</p>
+                    <p><strong>Punto de Partida:</strong> Plaza Central de Salsacate</p>
+                    <p><strong>Duración:</strong> 3-4 horas aproximadamente</p>
+                </div>
+                
+                <div class="cupos-container">
+                    <p style="color: white; font-weight: 600;">Cupos disponibles para este domingo:</p>
+                    <div class="cupos-display">
+                        <span class="cupos-number" id="cuposDisponibles">12</span>
+                        <span class="cupos-text">de 25 lugares</span>
+                    </div>
+                </div>
+                
+                <p class="cupos-limitados">⚠️ ¡Los cupos se agotan rápido!</p>
+                <a href="https://wa.me/5493544456650?text=¡Hola!%20Quiero%20anotarme%20para%20la%20salida%20del%20próximo%20domingo." 
+                   class="cta-button" target="_blank">
+                    📲 Anotate por WhatsApp
+                </a>
+            </div>
+        </section>
+
+        <!-- Galería -->
+        <section id="galeria" class="section gallery-section animate-on-scroll">
+            <div class="container">
+                <h2>📸 Galería de Fotos</h2>
+                <div class="gallery-container">
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Nah%20excursio%CC%81n%20e%CC%81pica,%20este%20lugar%20me%20sigue%20sorprendiendo%2020%20an%CC%83os%20despues%23vacaciones%20%23cordoba%20%23arge.jpg?raw=true" 
+                             alt="Vista de la cascada">
+                        <div class="gallery-overlay">
+                            <span class="gallery-caption">Vista panorámica de la cascada</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Te%20gustari%CC%81a%20conocer%20este%20hermoso%20lugarLo%20visitamos%20el%20domingo%202%20de%20marzo%20Salimos%20a%20las%2015-00hsI%20(1).webp?raw=true" 
+                             alt="Grupo de aventureros">
+                        <div class="gallery-overlay">
+                            <span class="gallery-caption">Grupo disfrutando de la aventura</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Te%20gustari%CC%81a%20conocer%20este%20hermoso%20lugarLo%20visitamos%20el%20domingo%202%20de%20marzo%20Salimos%20a%20las%2015-00hsI%20(2).webp?raw=true" 
+                             alt="Agua cristalina">
+                        <div class="gallery-overlay">
+                            <span class="gallery-caption">Aguas cristalinas de la cascada</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(this)">
+                        <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Te%20gustari%CC%81a%20conocer%20este%20hermoso%20lugarLo%20visitamos%20el%20domingo%202%20de%20marzo%20Salimos%20a%20las%2015-00hsI%20(3).webp?raw=true" 
+                             alt="Piscina natural">
+                        <div class="gallery-overlay">
+                            <span class="gallery-caption">Piscina natural perfecta para refrescarse</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox -->
+        <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+            <span class="lightbox-close">×</span>
+            <img src="" alt="" id="lightboxImg">
+        </div>
+
+        <!-- FAQ -->
+        <section id="faq" class="section faq-section animate-on-scroll">
+            <div class="container">
+                <h2>❓ Preguntas Frecuentes</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            ¿Necesito experiencia previa en trekking?
+                        </div>
+                        <div class="faq-answer">
+                            <p>No es necesaria experiencia previa, pero sí es importante tener un estado físico que te permita caminar 3-4 horas por senderos naturales con algunas subidas. Es un trekking de nivel medio, accesible para la mayoría de las personas.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            ¿Qué pasa si llueve?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Por seguridad, si si hay pronóstico de lluvias fuertes o tormentas, la excursión se reprograma para el siguiente domingo. Te avisaremos con anticipación por WhatsApp si hay cambios.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            ¿Pueden ir niños?
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sí, pueden participar niños mayores de 8 años acompañados por un adulto responsable. Es importante evaluar si el niño está acostumbrado a caminar distancias moderadas.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            ¿Está incluido el transporte?
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, cada persona debe llegar por sus propios medios al punto de encuentro en la Plaza Central de Salsacate. Desde allí caminamos juntos hasta el inicio del sendero.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            ¿Puedo llevar mascotas?
+                        </div>
+                        <div class="faq-answer">
+                            <p>No, no se permiten mascotas ya que es un área natural protegida y para evitar disturbios a la fauna local.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- En los Medios -->
+        <section class="section media-section animate-on-scroll">
+            <div class="container">
+                <h2>📰 En los Medios</h2>
+                <div class="media-grid">
+                    <div class="media-card">
+                        <!-- Puedes agregar una imagen preview si tienes URL -->
+                        <img src="https://www.cadena3.com/files/image/283128/h900/una-cascada-con-un-trekking-imperdible-a-15-km-de-salsacate.jpg" alt="Preview de la nota en Cadena 3">
+                        <div class="media-content">
+                            <h3>Una cascada con un trekking imperdible a 15 km de Salsacate</h3>
+                            <p class="media-summary">Cascada Casa de Plata is a 10-meter-high waterfall located 15 km from Salsacate, Córdoba, on the Arroyo Sauce de los Quevedos, ideal for summer visits. It features a medium-difficulty trekking experience, attracting tourists with its scenic beauty and hidden cave behind the waterfall. Nearby, the Casa del Gaucho, a historical site and former refuge, is accessible within 5 minutes. Guided tours are available on Wednesdays, Fridays, Saturdays, and Sundays for approximately $300, contactable at 351-6811037, offering an immersive exploration of this lesser-known serrano spot.</p>
+                            <a href="https://www.cadena3.com/noticia/cordoba/una-cascada-con-un-trekking-imperdible-a-15-km-de-salsacate_283128" class="cta-button media-button" target="_blank">Leer Nota Completa</a>
+                        </div>
+                    </div>
+                    <div class="media-card">
+                        <!-- Puedes agregar una imagen preview si tienes URL -->
+                        <img src="https://cordobainteriorinforma.com/wp-content/uploads/2021/12/cascada-casa-de-plata.jpg" alt="Preview de la nota en Córdoba Interior Informa">
+                        <div class="media-content">
+                            <h3>Cascada Casa de Plata, una gran atracción natural que ofrece Salsacate</h3>
+                            <p class="media-summary">La Cascada Casa de Plata es una destacada atracción natural ubicada en Salsacate, ofreciendo a los visitantes un entorno paisajístico de gran belleza. Este sitio es ideal para actividades de trekking, permitiendo a los turistas explorar la zona y disfrutar de la naturaleza. Su atractivo radica en las impresionantes vistas y la experiencia de conexión con el entorno natural, convirtiéndola en un destino atractivo para quienes buscan aventuras al aire libre.</p>
+                            <a href="https://cordobainteriorinforma.com/2021/12/07/cascada-casa-de-plata-una-gran-atraccion-natural-que-ofrece-salsacate/" class="cta-button media-button" target="_blank">Leer Nota Completa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mapa -->
+        <section class="section map-section animate-on-scroll">
+            <div class="container">
+                <h2>📍 Punto de Encuentro</h2>
+                <p>Nos encontramos en la Plaza Central de Salsacate para comenzar la aventura. ¡Te dejamos el mapa para que llegues sin problemas!</p>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d426.061779064803!2d-65.08978998541609!3d-31.3177211946539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x942d01dbd6bfc021%3A0x14dbbf119011fdf6!2sPlaza%20Central%20de%20Salsacate!5e0!3m2!1ses-419!2sar!4v1758385278391!5m2!1ses-419!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instagram -->
+        <section class="section instagram-section animate-on-scroll">
+            <div class="container">
+                <h2>📸 Mirá lo que te estás perdiendo</h2>
+                <div class="instagram-grid">
+                    <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Nah%20excursio%CC%81n%20e%CC%81pica,%20este%20lugar%20me%20sigue%20sorprendiendo%2020%20an%CC%83os%20despues%23vacaciones%20%23cordoba%20%23arge.jpg?raw=true" alt="Hombre posando frente a la cascada">
+                    <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Te%20gustari%CC%81a%20conocer%20este%20hermoso%20lugarLo%20visitamos%20el%20domingo%202%20de%20marzo%20Salimos%20a%20las%2015-00hsI%20(1).webp?raw=true" alt="Vista amplia de la cascada con gente">
+                    <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Te%20gustari%CC%81a%20conocer%20este%20hermoso%20lugarLo%20visitamos%20el%20domingo%202%20de%20marzo%20Salimos%20a%20las%2015-00hsI%20(2).webp?raw=true" alt="Cascada con agua cristalina y vegetación">
+                    <img src="https://github.com/Emilianocecchi/cascadacasadeplata/blob/main/Te%20gustari%CC%81a%20conocer%20este%20hermoso%20lugarLo%20visitamos%20el%20domingo%202%20de%20marzo%20Salimos%20a%20las%2015-00hsI%20(3).webp?raw=true" alt="Gente nadando en la olla de la cascada">
+                </div>
+                <a href="https://www.instagram.com/cascadacasadeplataa/" target="_blank" class="instagram-button">
+                    Seguinos en Instagram
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <h2>¿Listo para la aventura?</h2>
+            <p>El próximo lugar junto a la cascada puede ser tuyo. ¡No te quedes sin tu cupo!</p>
+            <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20reservar%20mi%20lugar%20para%20la%20excursión." class="cta-button" target="_blank">¡Reservá tu lugar ahora!</a>
+            <p class="contact-info">Cascada Casa de Plata | Salsacate, Córdoba, Argentina</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/cascadacasadeplataa/" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5493544456650" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante WhatsApp -->
+    <a href="https://wa.me/5493544456650?text=¡Hola!%20Quisiera%20más%20info." class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.classList.add('hidden');
+        });
+
+        // Navbar Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        function closeMobileMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }
+
+        // Animaciones al Scroll
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(el => observer.observe(el));
+
+        // Countdown a próximo domingo 15:00
+        function getNextSunday() {
+            const now = new Date();
+            const daysToSunday = (7 - now.getDay()) % 7;
+            const nextSunday = new Date(now);
+            nextSunday.setDate(now.getDate() + daysToSunday);
+            nextSunday.setHours(15, 0, 0, 0);
+            return nextSunday;
+        }
+
+        function updateCountdown() {
+            const nextSunday = getNextSunday();
+            const now = new Date();
+            const diff = nextSunday - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+
+            if (diff < 0) {
+                // Si ya pasó, calcular para el próximo
+                updateCountdown();
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Toggle FAQ
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+        }
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+
+        function openLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        // Cupos aleatorios para demo (puedes actualizar con datos reales)
+        document.getElementById('cuposDisponibles').textContent = Math.floor(Math.random() * 10) + 5;
+    </script>
+</body>
+</html>                        <p>Trekking de <span class="highlight">nivel medio</span>. ¡Ideal para aventureros!</p>
                     </div>
                 </div>
             </div>
